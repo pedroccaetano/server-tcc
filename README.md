@@ -11,5 +11,5 @@ Crawler do Portal da Nota Fiscal Eletrônica
 - yarn
 
 #### Run
-npm start
+- yarn start 
 

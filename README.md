@@ -5,6 +5,10 @@ Crawler do Portal da Nota Fiscal Eletrônica
 </hr>
 npm install
 
+delete package-lock.json
+
+yarn
+
 #### Run
 npm start
 

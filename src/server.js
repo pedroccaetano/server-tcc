@@ -1,11 +1,11 @@
 require("dotenv").config();
 
-import express from "express";
-import mongoose from "mongoose";
-import cors from "cors";
-import routes from "./routes";
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const routes = require("./routes");
 
-import databaseConfig from "./config/database";
+const databaseConfig = require("./config/database");
 
 class App {
   constructor() {

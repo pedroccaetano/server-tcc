@@ -1,11 +1,11 @@
-import express from "express";
+const express = require("express");
 
-import notaMiddleware from "./app/middlewares/crawler";
-import authMiddleware from "./app/middlewares/auth";
+const notaMiddleware = require("./app/middlewares/crawler");
+const authMiddleware = require("./app/middlewares/auth");
 
-import NotaController from "./app/controllers/NotaController";
-import UserController from "./app/controllers/UserController";
-import SessionController from "./app/controllers/SessionController";
+const NotaController = require("./app/controllers/NotaController");
+const UserController = require("./app/controllers/UserController");
+const SessionController = require("./app/controllers/SessionController");
 
 const routes = express.Router();
 
@@ -29,5 +29,3 @@ routes.post("/nota/update", NotaController.update);
 routes.get("/nota/show", NotaController.show);
 
 module.exports = routes;
-
-// export default routes;

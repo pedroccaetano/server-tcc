@@ -1,10 +1,10 @@
-import request from "request-promise";
-import convertXml from "xml-js";
-import moment from "moment";
-import cheerio from "cheerio";
+const request = require("request-promise");
+const convertXml = require("xml-js");
+const moment = require("moment");
+const cheerio = require("cheerio");
 
-import { pernambuco, santa_catarina } from "../../config/sefaz";
-import { isSafe } from "../utils";
+const { pernambuco, santa_catarina } = require("../../config/sefaz");
+const { isSafe } = require("../utils");
 
 moment.locale("pt-BR");
 

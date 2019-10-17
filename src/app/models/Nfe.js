@@ -1,12 +1,24 @@
 const mongoose = require("mongoose");
 
 const NfeSchema = new Object({
-  modelo: {
-    type: Number,
-    required: true
+  url: {
+    type: String,
+    required: false
+  },
+  versao: {
+    type: String,
+    required: false
   },
   serie: {
     type: Number,
+    required: false
+  },
+  modelo: {
+    type: Number,
+    required: false
+  },
+  chave: {
+    type: String,
     required: false
   },
   numero: {

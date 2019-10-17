@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 
-const dados = require("./DadosGerais");
 const nfe = require("./Nfe");
 const emitente = require("./Emitente");
 const produto = require("./Produto");
@@ -13,7 +12,6 @@ const NotaSchema = new mongoose.Schema({
       required: true
     }
   },
-  dados,
   nfe,
   emitente,
   total,

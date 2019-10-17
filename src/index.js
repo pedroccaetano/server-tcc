@@ -1,3 +1,6 @@
-const server = require('./server')
+import server from "./server";
+import chalk from "chalk";
 
-server.listen(process.env.PORT || 3000) 
+console.chalk = chalk;
+
+server.listen(process.env.PORT || 3000);

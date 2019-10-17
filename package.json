@@ -5,8 +5,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/index.js",
-    "start": "node src/index.js"
+    "dev": "nodemon --exec sucrase-node src/index.js",
+    "start": "node --exec sucrase-node src/index.js"
   },
   "keywords": [
     "crawler",
@@ -16,9 +16,7 @@
   ],
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.19.0",
     "bcryptjs": "^2.4.3",
-    "bluebird": "^3.5.3",
     "cheerio": "^1.0.0-rc.2",
     "cors": "^2.8.5",
     "dotenv": "^7.0.0",
@@ -32,6 +30,11 @@
     "xml-js": "^1.6.11"
   },
   "devDependencies": {
-    "nodemon": "^1.19.0"
+    "eslint-config-airbnb": "^18.0.1",
+    "nodemon": "^1.19.3",
+    "sucrase": "^3.10.1"
+  },
+  "engines": {
+    "node": "12.10.0"
   }
 }

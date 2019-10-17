@@ -1,13 +1,13 @@
-const express = require("express");
+import express from "express";
+
+import notaMiddleware from "./app/middlewares/crawler";
+import authMiddleware from "./app/middlewares/auth";
+
+import NotaController from "./app/controllers/NotaController";
+import UserController from "./app/controllers/UserController";
+import SessionController from "./app/controllers/SessionController";
 
 const routes = express.Router();
-
-const notaMiddleware = require("./app/middlewares/crawler");
-const authMiddleware = require("./app/middlewares/auth");
-
-const NotaController = require("./app/controllers/NotaController");
-const UserController = require("./app/controllers/UserController");
-const SessionController = require("./app/controllers/SessionController");
 
 routes.get("/", (req, res) =>
   res.send("API/CRAWLER do Portal da Nota Fiscal Eletrônica")
@@ -30,4 +30,4 @@ routes.get("/nota/show", NotaController.show);
 
 module.exports = routes;
 
-// /nota/date/initDate/2019-1-01/finalDate/2019-2-01/productName/""/barcode/""/organization/""
+// export default routes;

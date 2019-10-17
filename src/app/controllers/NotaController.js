@@ -1,8 +1,11 @@
 const Nota = require("../models/Nota");
+const Produto = require("../models/Produto");
 
 class NotaController {
   async store(req, res) {
     const { nota } = req;
+
+    console.log(nota);
 
     await Nota.create(nota)
       .then(response => {
@@ -16,21 +19,28 @@ class NotaController {
         return res.json({
           houve_erro: "S",
           mensagem: "Operação cancelada.",
-          mensage_error: error.errors["Total.valor_produto"].message
+          mensage_error: error
         });
       });
   }
 
   async find(req, res) {
-    let { productName, barcode, organization } = req.params;
-    const { email } = req.body;
-    let { initDate, finalDate } = req.params;
+    let {
+      productName,
+      barcode,
+      organization,
+      initDate,
+      finalDate
+    } = req.params;
 
-    initDate = initDate.split("-");
-    finalDate = finalDate.split("-");
+    const { email } = req.query;
 
-    initDate = new Date(initDate[0], initDate[1], initDate[2]);
-    finalDate = new Date(finalDate[0], finalDate[1], finalDate[2]);
+    const arrayDateInit = initDate.split("-");
+    const arrayDateFinal = finalDate.split("-");
+
+    if (productName == '""') {
+      productName = "";
+    }
 
     if (organization == '""') {
       organization = "";
@@ -40,45 +50,67 @@ class NotaController {
       barcode = "";
     }
 
-    if (productName == '""') {
-      productName = "";
-    }
+    // "user.email": email,
+    // "emitente.nome_razao": new RegExp(organization, "i"),
+    // "produtos.nome": new RegExp(productName, "i"),
+    // "produtos.ncm": new RegExp(barcode, "i"),
+    // "nfe.data_emissao": {
+    //   $gte: new Date(arrayDateInit[0], arrayDateInit[1], arrayDateInit[2]),
+    //   $lte: new Date(arrayDateFinal[0], arrayDateFinal[1], arrayDateFinal[2])
+    // }
 
     await Nota.find({
       "user.email": email,
+      "emitente.nome_razao": new RegExp(organization, "i"),
+      "produtos.nome": new RegExp(productName, "i"),
+      "produtos.ncm": new RegExp(barcode, "i"),
       "nfe.data_emissao": {
-        $gte: initDate,
-        $lte: finalDate
-      },
-      "produtos.ncm": new RegExp(productName, "i"),
-      "produtos.name": new RegExp(barcode, "i"),
-      "emitente.nome_razao": new RegExp(organization, "i")
+        $gte: new Date(arrayDateInit[0], arrayDateInit[1], arrayDateInit[2]),
+        $lte: new Date(arrayDateFinal[0], arrayDateFinal[1], arrayDateFinal[2])
+      }
     })
+      .select("produtos emitente")
       .then(response => {
-        console.log(response);
+        let notas = [];
+
+        for (let i = 0; i < response.length; i++) {
+          let { produtos, emitente } = response[i];
+
+          for (let w = 0; w < produtos.length; w++) {
+            let produto = produtos[w];
+
+            if (
+              produto.nome.toUpperCase().includes(productName.toUpperCase())
+            ) {
+              notas.push({
+                emitente: emitente,
+                produto: produto,
+                id: Math.floor(Math.random() * 10000)
+              });
+            }
+          }
+        }
+
         return res.json({
           houve_erro: "N",
-          nota: response
+          nota: notas
         });
       })
       .catch(error => {
+        console.log("Não foi possível fazer a busca.");
         return res.json({
           houve_erro: "S",
-          mensagem: "Não foi possível fazer a busca.",
-          mensagem_error: error.errors["Total.valor_produto"].message
+          mensagem: "Não foi possível fazer a busca."
+          // mensagem_error: error.errors["Total.valor_produto"].message
         });
       });
-
-    // res.json({ ok: true });
   }
 
   async findByDate(req, res) {
     const { dateString } = req.params;
-    const { email } = req.body;
+    const { email } = req.query;
 
     const date_split = dateString.split("-");
-
-    console.log(date_split);
 
     let minDate = new Date(parseInt(date_split[0]), parseInt(date_split[1]), 1);
     let maxDate = new Date(parseInt(date_split[0]), minDate.getMonth() + 1, 0);
@@ -91,7 +123,6 @@ class NotaController {
       }
     })
       .then(response => {
-        console.log(response);
         return res.json({
           houve_erro: "N",
           nota: response
@@ -100,8 +131,8 @@ class NotaController {
       .catch(error => {
         return res.json({
           houve_erro: "S",
-          mensagem: "Não foi possível fazer a busca.",
-          mensagem_error: error.errors["Total.valor_produto"].message
+          mensagem: "Não foi possível fazer a busca."
+          // mensagem_error: error.errors["Total.valor_produto"].message
         });
       });
   }

@@ -13,27 +13,6 @@ require("../utils");
 module.exports = async (req, res, next) => {
   let url = req.body.url;
 
-  console.log(url);
-
-  if (url.length == 150) {
-    console.log();
-    url = url.substring(59, 103).trim();
-  }
-  if (url.length == 126) {
-    console.log("entrou 127");
-    url = url.substring(82, 127).trim();
-  }
-  if (url.length == 215) {
-    console.log("aquiii 216");
-    url = url.substring(57, 101).trim();
-  }
-  if (url.length == 148) {
-    console.log("aquiii 149");
-    url = url.substring(57, 101).trim();
-  }
-
-  console.log(`${sefas.url_completa}${url}`);
-
   var options = {
     uri: `${sefas.url_completa}${url}`,
     method: "GET",
@@ -418,8 +397,6 @@ module.exports = async (req, res, next) => {
 
       // FIM ITENS
     })
-    .catch(function(err) {
-      console.log("Erro -> ", err);
-    });
+    .catch(function(err) {});
   next();
 };

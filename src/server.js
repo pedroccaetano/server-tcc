@@ -1,10 +1,11 @@
 require("dotenv").config();
 
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
+import express from "express";
+import mongoose from "mongoose";
+import cors from "cors";
+import routes from "./routes";
 
-const databaseConfig = require("./config/database");
+import databaseConfig from "./config/database";
 
 class App {
   constructor() {
@@ -21,19 +22,21 @@ class App {
     await mongoose
       .connect(databaseConfig.uri, {
         useCreateIndex: true,
+        useUnifiedTopology: true,
         useNewUrlParser: true
       })
       .catch(error => {
-        console.log(error);
+        // console.log(error);
       });
   }
 
   middlewares() {
+    this.express.use(express.urlencoded({ extended: true }));
     this.express.use(express.json());
   }
 
   routes() {
-    this.express.use(require("./routes"));
+    this.express.use(routes);
   }
 }
 

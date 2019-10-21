@@ -94,7 +94,7 @@ module.exports = async (req, res, next) => {
             cep: isSafe(() => dadosNota.emit.enderEmit.CEP.text, null),
             municipio: isSafe(() => dadosNota.emit.enderEmit.xMun.text, null),
             telefone: isSafe(() => dadosNota.emit.enderEmit.fone.text, null),
-            uf: isSafe(() => dadosNota.emit.enderEmit.UF.text, null)
+            uf: isSafe(() => "PE", null)
           },
           produtos,
           total: {
@@ -235,7 +235,7 @@ module.exports = async (req, res, next) => {
               cep: isSafe(() => cep, null),
               municipio: isSafe(() => municipio, null),
               telefone: isSafe(() => telefone, null),
-              uf: isSafe(() => "UF", null)
+              uf: isSafe(() => "RS", null)
             },
             produtos: isSafe(() => produtos, null),
             total: {

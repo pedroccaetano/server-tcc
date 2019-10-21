@@ -30,7 +30,8 @@ class NotaController {
       barcode,
       organization,
       initDate,
-      finalDate
+      finalDate,
+      state
     } = req.params;
 
     const { email } = req.query;
@@ -50,6 +51,10 @@ class NotaController {
       barcode = "";
     }
 
+    if (state == '""') {
+      state = "";
+    }
+
     // "user.email": email,
     // "emitente.nome_razao": new RegExp(organization, "i"),
     // "produtos.nome": new RegExp(productName, "i"),
@@ -61,6 +66,7 @@ class NotaController {
 
     await Nota.find({
       "user.email": email,
+      "emitente.uf": new RegExp(state, "i"),
       "emitente.nome_razao": new RegExp(organization, "i"),
       "produtos.nome": new RegExp(productName, "i"),
       "produtos.ncm": new RegExp(barcode, "i"),

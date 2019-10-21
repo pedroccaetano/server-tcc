@@ -249,9 +249,6 @@ module.exports = async (req, res, next) => {
       })
       .catch(err => {
         console.log("Erro ao realizar requisição");
-      })
-      .finally(() => {
-        console.log("Finalizou o processo");
       });
   }
 

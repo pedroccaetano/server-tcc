@@ -21,7 +21,7 @@ routes.use(authMiddleware);
 routes.post("/nota/store", notaMiddleware, NotaController.store);
 routes.get("/nota/date/:dateString", NotaController.findByDate);
 routes.get(
-  "/nota/date/initDate/:initDate/finalDate/:finalDate/productName/:productName/barcode/:barcode/organization/:organization",
+  "/nota/date/initDate/:initDate/finalDate/:finalDate/productName/:productName/barcode/:barcode/organization/:organization/state/:state",
   NotaController.find
 );
 routes.post("/nota/destroy", NotaController.destroy);

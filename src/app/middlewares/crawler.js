@@ -117,7 +117,6 @@ module.exports = async (req, res, next) => {
       method: "GET"
     })
       .then(async html => {
-        console.log("primeira");
         let $ = cheerio.load(html);
 
         let urlInterna = $("iframe").attr("src");
@@ -125,7 +124,6 @@ module.exports = async (req, res, next) => {
           uri: `http://app.scrapingbee.com/api/v1/?api_key=A6X79RC90QIWRLTXAJWUB4VO8IA7IP4VTCVU7IQLOJJU05BQMB9HZ1E6MTSNXLADLJDFZ9WGP97JQ0UK&url=${urlInterna}&render_js=True`,
           method: "GET"
         }).then(html => {
-          console.log("segunda");
           let $ = cheerio.load(html);
 
           let page = $.root();
@@ -199,6 +197,10 @@ module.exports = async (req, res, next) => {
           let regexCNPJ = /(\d{2}.?\d{3}.?\d{3}[/]?\d{4}-?\d{2})/g;
           let cnpj = dadosEmitente.match(regexCNPJ);
           cnpj = cnpj[0];
+
+          cnpk = cnpj.replace("-", "");
+          cnpk = cnpj.replace("*", "");
+          cnpk = cnpj.replace("/", "");
 
           let regexInsEstadual = /(\d{10})/g;
           let escricao_estadual = dadosEmitente.match(regexInsEstadual);

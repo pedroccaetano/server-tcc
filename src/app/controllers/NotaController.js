@@ -5,8 +5,6 @@ class NotaController {
   async store(req, res) {
     const { nota } = req;
 
-    console.log(nota);
-
     await Nota.create(nota)
       .then(response => {
         return res.json({
@@ -103,7 +101,6 @@ class NotaController {
         });
       })
       .catch(error => {
-        console.log("Não foi possível fazer a busca.");
         return res.json({
           houve_erro: "S",
           mensagem: "Não foi possível fazer a busca."

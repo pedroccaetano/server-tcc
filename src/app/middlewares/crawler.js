@@ -196,11 +196,7 @@ module.exports = async (req, res, next) => {
 
           let regexCNPJ = /(\d{2}.?\d{3}.?\d{3}[/]?\d{4}-?\d{2})/g;
           let cnpj = dadosEmitente.match(regexCNPJ);
-          cnpj = cnpj[0];
-
-          cnpk = cnpj.replace("-", "");
-          cnpk = cnpj.replace("*", "");
-          cnpk = cnpj.replace("/", "");
+          cnpj = cnpj[0].replace(/[^\d]+/g, "");
 
           let regexInsEstadual = /(\d{10})/g;
           let escricao_estadual = dadosEmitente.match(regexInsEstadual);

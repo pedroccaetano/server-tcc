@@ -49,8 +49,20 @@ module.exports = async (req, res, next) => {
             cfop: isSafe(() => produto.CFOP.text, null),
             unidade: isSafe(() => produto.uCom.text, null),
             quantidade: isSafe(() => produto.qCom.text, null),
-            preco_unitario: isSafe(() => produto.vUnCom.text, null),
-            preco_total: isSafe(() => produto.vProd.text, null),
+            preco_unitario: isSafe(
+              () =>
+                parseFloat(produto.vUnCom.text)
+                  .toFixed(2)
+                  .replace(".", ","),
+              null
+            ),
+            preco_total: isSafe(
+              () =>
+                parseFloat(produto.vProd.text)
+                  .toFixed(2)
+                  .replace(".", ","),
+              null
+            ),
             desconto: isSafe(() => produto.vDesc.text, null)
           });
         });
@@ -150,6 +162,7 @@ module.exports = async (req, res, next) => {
             });
 
           while (dadosProdutos.length > 0) {
+            // console.log(dadosProdutos.splice(0, 6));
             arrayProdutos.push(dadosProdutos.splice(0, 6));
           }
           arrayProdutos.pop();

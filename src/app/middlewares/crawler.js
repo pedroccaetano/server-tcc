@@ -240,10 +240,7 @@ module.exports = async (req, res, next) => {
             },
             produtos: isSafe(() => produtos, null),
             total: {
-              valor_produto: isSafe(
-                () => valor_produto.replace(/,/, "."),
-                null
-              ),
+              valor_produto: isSafe(() => valor_nota.replace(/,/, "."), null),
               valor_nota: isSafe(() => valor_nota.replace(/,/, "."), null)
             }
           };

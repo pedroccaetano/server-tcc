@@ -49,14 +49,8 @@ module.exports = async (req, res, next) => {
             cfop: isSafe(() => produto.CFOP.text, null),
             unidade: isSafe(() => produto.uCom.text, null),
             quantidade: isSafe(() => produto.qCom.text, null),
-            preco_unitario: isSafe(
-              () => parseFloat(produto.vUnCom.text).toFixed(2),
-              null
-            ),
-            preco_total: isSafe(
-              () => parseFloat(produto.vProd.text).toFixed(2),
-              null
-            ),
+            preco_unitario: isSafe(() => produto.vUnCom.text, null),
+            preco_total: isSafe(() => produto.vProd.text, null),
             desconto: isSafe(() => produto.vDesc.text, null)
           });
         });
@@ -151,7 +145,7 @@ module.exports = async (req, res, next) => {
               ".NFCCabecalho tr:nth-of-type(n+2) td.NFCDetalhe_Item:nth-of-type(1), tr:nth-of-type(5) table tbody tr:nth-of-type(n+2) td"
             )
             .each(function(i, elem) {
-              console.log(dadosProdutos.push($(this).text()));
+              // console.log($(this).text());
               dadosProdutos.push($(this).text());
             });
 
@@ -166,11 +160,8 @@ module.exports = async (req, res, next) => {
               nome: isSafe(() => produto[1], null),
               quantidade: isSafe(() => produto[2], null),
               unidade: isSafe(() => produto[3], null),
-              preco_unitario: isSafe(
-                () => parseFloat(produto[4]).toFixed(2),
-                null
-              ),
-              preco_total: isSafe(() => parseFloat(produto[5]).toFixed(2), null)
+              preco_unitario: isSafe(() => produto[4], null),
+              preco_total: isSafe(() => produto[5], null)
             });
           });
 

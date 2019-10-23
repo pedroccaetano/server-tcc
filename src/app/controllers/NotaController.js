@@ -53,21 +53,18 @@ class NotaController {
       state = "";
     }
 
-    // "user.email": email,
-    // "emitente.nome_razao": new RegExp(organization, "i"),
-    // "produtos.nome": new RegExp(productName, "i"),
-    // "produtos.ncm": new RegExp(barcode, "i"),
-    // "nfe.data_emissao": {
-    //   $gte: new Date(arrayDateInit[0], arrayDateInit[1], arrayDateInit[2]),
-    //   $lte: new Date(arrayDateFinal[0], arrayDateFinal[1], arrayDateFinal[2])
-    // }
+    console.log(email);
+    console.log(state);
+    console.log(organization);
+    console.log(productName);
+    console.log(barcode);
 
     await Nota.find({
       "user.email": email,
       "emitente.uf": new RegExp(state, "i"),
+      // "produtos.ncm": new RegExp(barcode, "i"),
       "emitente.nome_razao": new RegExp(organization, "i"),
       "produtos.nome": new RegExp(productName, "i"),
-      "produtos.ncm": new RegExp(barcode, "i"),
       "nfe.data_emissao": {
         $gte: new Date(arrayDateInit[0], arrayDateInit[1], arrayDateInit[2]),
         $lte: new Date(arrayDateFinal[0], arrayDateFinal[1], arrayDateFinal[2])
@@ -76,6 +73,8 @@ class NotaController {
       .select("produtos emitente")
       .then(response => {
         let notas = [];
+
+        console.log(response);
 
         for (let i = 0; i < response.length; i++) {
           let { produtos, emitente } = response[i];

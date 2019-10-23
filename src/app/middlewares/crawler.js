@@ -230,7 +230,7 @@ module.exports = async (req, res, next) => {
               escricao_estadual: isSafe(() => escricao_estadual, null),
               endereco: isSafe(() => endereco, null),
               bairro_distrito: isSafe(() => bairro_distrito, null),
-              cep: isSafe(() => cep, null),
+              cep: isSafe(() => "90000000", null),
               municipio: isSafe(() => municipio, null),
               telefone: isSafe(() => telefone, null),
               uf: isSafe(() => "RS", null)

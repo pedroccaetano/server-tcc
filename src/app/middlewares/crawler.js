@@ -99,10 +99,13 @@ module.exports = async (req, res, next) => {
           produtos,
           total: {
             valor_produto: isSafe(
-              () => dadosNota.total.ICMSTot.vProd.text,
+              () => dadosNota.total.ICMSTot.vProd.text.replace(/,/, "."),
               null
             ),
-            valor_nota: isSafe(() => dadosNota.total.ICMSTot.vNF.text, null)
+            valor_nota: isSafe(
+              () => dadosNota.total.ICMSTot.vNF.text.replace(/,/, "."),
+              null
+            )
           }
         };
 
@@ -237,8 +240,11 @@ module.exports = async (req, res, next) => {
             },
             produtos: isSafe(() => produtos, null),
             total: {
-              valor_produto: isSafe(() => valor_produto, null),
-              valor_nota: isSafe(() => valor_nota, null)
+              valor_produto: isSafe(
+                () => valor_produto.replace(/,/, "."),
+                null
+              ),
+              valor_nota: isSafe(() => valor_nota.replace(/,/, "."), null)
             }
           };
 

@@ -151,6 +151,7 @@ module.exports = async (req, res, next) => {
               ".NFCCabecalho tr:nth-of-type(n+2) td.NFCDetalhe_Item:nth-of-type(1), tr:nth-of-type(5) table tbody tr:nth-of-type(n+2) td"
             )
             .each(function(i, elem) {
+              console.log(dadosProdutos.push($(this).text()));
               dadosProdutos.push($(this).text());
             });
 

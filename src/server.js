@@ -26,7 +26,7 @@ class App {
         useNewUrlParser: true
       })
       .catch(error => {
-        // console.log(error);
+        console.error("Erro ao tentar acessar a base de dados: ", error);
       });
   }
 

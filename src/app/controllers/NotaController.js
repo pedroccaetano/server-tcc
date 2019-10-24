@@ -53,12 +53,6 @@ class NotaController {
       state = "";
     }
 
-    console.log(email);
-    console.log(state);
-    console.log(organization);
-    console.log(productName);
-    console.log(barcode);
-
     await Nota.find({
       "user.email": email,
       "emitente.uf": new RegExp(state, "i"),
@@ -73,8 +67,6 @@ class NotaController {
       .select("produtos emitente")
       .then(response => {
         let notas = [];
-
-        console.log(response);
 
         for (let i = 0; i < response.length; i++) {
           let { produtos, emitente } = response[i];

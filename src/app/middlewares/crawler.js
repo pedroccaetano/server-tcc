@@ -117,9 +117,7 @@ module.exports = async (req, res, next) => {
 
         req.nota = nota;
       })
-      .catch(error => {
-        // console.log(error);
-      });
+      .catch(error => {});
   } else if (urlDecisao === santa_catarina) {
     await request({
       uri: `http://app.scrapingbee.com/api/v1/?api_key=A6X79RC90QIWRLTXAJWUB4VO8IA7IP4VTCVU7IQLOJJU05BQMB9HZ1E6MTSNXLADLJDFZ9WGP97JQ0UK&url=${url}&render_js=True`,
@@ -157,12 +155,10 @@ module.exports = async (req, res, next) => {
               ".NFCCabecalho tr:nth-of-type(n+2) td.NFCDetalhe_Item:nth-of-type(1), tr:nth-of-type(5) table tbody tr:nth-of-type(n+2) td"
             )
             .each(function(i, elem) {
-              // console.log($(this).text());
               dadosProdutos.push($(this).text());
             });
 
           while (dadosProdutos.length > 0) {
-            // console.log(dadosProdutos.splice(0, 6));
             arrayProdutos.push(dadosProdutos.splice(0, 6));
           }
           arrayProdutos.pop();

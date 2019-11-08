@@ -3,7 +3,7 @@ const convertXml = require("xml-js");
 const moment = require("moment");
 const cheerio = require("cheerio");
 
-const { pernambuco, santa_catarina } = require("../../config/sefaz");
+const sefaz = require("../../config/sefaz");
 const { isSafe } = require("../utils");
 
 moment.locale("pt-BR");
@@ -13,7 +13,7 @@ module.exports = async (req, res, next) => {
 
   let urlDecisao = url.substr(0, 27);
 
-  if (urlDecisao == pernambuco) {
+  if (sefaz.estados.includes(urlDecisao)) {
     await request({
       uri: url,
       method: "GET",
@@ -117,8 +117,10 @@ module.exports = async (req, res, next) => {
 
         req.nota = nota;
       })
-      .catch(error => {});
-  } else if (urlDecisao === santa_catarina) {
+      .catch(() => {
+        console.log("Erro ao realizar requisição");
+      });
+  } else if (sefaz.estados.includes(urlDecisao)) {
     await request({
       uri: `http://app.scrapingbee.com/api/v1/?api_key=A6X79RC90QIWRLTXAJWUB4VO8IA7IP4VTCVU7IQLOJJU05BQMB9HZ1E6MTSNXLADLJDFZ9WGP97JQ0UK&url=${url}&render_js=True`,
       method: "GET"
@@ -249,7 +251,7 @@ module.exports = async (req, res, next) => {
           req.nota = nota;
         });
       })
-      .catch(err => {
+      .catch(() => {
         console.log("Erro ao realizar requisição");
       });
   }

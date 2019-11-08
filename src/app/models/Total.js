@@ -1,5 +1,3 @@
-const mongoose = require("mongoose");
-
 const TotalSchema = new Object({
   valor_produto: {
     type: String,

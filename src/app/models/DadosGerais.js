@@ -1,5 +1,3 @@
-const mongoose = require("mongoose");
-
 const DadosGeraisSchema = new Object({
   chave: {
     type: String,

@@ -1,5 +1,3 @@
-const mongoose = require("mongoose");
-
 const NfeSchema = new Object({
   url: {
     type: String,

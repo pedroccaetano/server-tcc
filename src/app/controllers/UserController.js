@@ -18,8 +18,8 @@ class UserController {
           user
         });
       })
-      .catch(err =>
-        res.json({ resposta: "Ocorreu um erro!", houve_erro: true, err })
+      .catch(error =>
+        res.json({ resposta: "Ocorreu um erro!", houve_erro: true, error })
       );
 
     return res.json(user);

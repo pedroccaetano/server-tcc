@@ -1,5 +1,4 @@
 const Nota = require("../models/Nota");
-const Produto = require("../models/Produto");
 
 class NotaController {
   async store(req, res) {
@@ -8,14 +7,14 @@ class NotaController {
     await Nota.create(nota)
       .then(response => {
         return res.json({
-          houve_erro: "N",
+          houve_erro: false,
           mensagem: "Nota salva com sucesso.",
           nota: response
         });
       })
       .catch(error => {
         return res.json({
-          houve_erro: "S",
+          houve_erro: true,
           mensagem: "Operação cancelada.",
           mensage_error: error
         });
@@ -56,7 +55,6 @@ class NotaController {
     await Nota.find({
       "user.email": email,
       "emitente.uf": new RegExp(state, "i"),
-      // "produtos.ncm": new RegExp(barcode, "i"),
       "emitente.nome_razao": new RegExp(organization, "i"),
       "produtos.nome": new RegExp(productName, "i"),
       "nfe.data_emissao": {
@@ -68,12 +66,10 @@ class NotaController {
       .then(response => {
         let notas = [];
 
-        for (let i = 0; i < response.length; i++) {
-          let { produtos, emitente } = response[i];
+        response.map(resposta => {
+          let { produtos, emitente } = resposta;
 
-          for (let w = 0; w < produtos.length; w++) {
-            let produto = produtos[w];
-
+          produtos.map(produto => {
             if (
               produto.nome.toUpperCase().includes(productName.toUpperCase())
             ) {
@@ -83,19 +79,18 @@ class NotaController {
                 id: Math.floor(Math.random() * 10000)
               });
             }
-          }
-        }
+          });
+        });
 
         return res.json({
-          houve_erro: "N",
+          houve_erro: false,
           nota: notas
         });
       })
       .catch(error => {
         return res.json({
-          houve_erro: "S",
+          houve_erro: true,
           mensagem: "Não foi possível fazer a busca."
-          // mensagem_error: error.errors["Total.valor_produto"].message
         });
       });
   }
@@ -118,15 +113,14 @@ class NotaController {
     })
       .then(response => {
         return res.json({
-          houve_erro: "N",
+          houve_erro: false,
           nota: response
         });
       })
       .catch(error => {
         return res.json({
-          houve_erro: "S",
+          houve_erro: true,
           mensagem: "Não foi possível fazer a busca."
-          // mensagem_error: error.errors["Total.valor_produto"].message
         });
       });
   }
@@ -150,55 +144,3 @@ class NotaController {
   }
 }
 module.exports = new NotaController();
-
-// const nota_fiscal = {
-//   // TODO: RECEBER INDENTIFICADOR DO USUÁRIO
-//   url: req.url,
-//   usuario: new Object({
-//     id: 1,
-//     nome: "Pedro"
-//   }),
-//   dados_gerais: new Object({
-//     chave_acesso: req.chave_acesso,
-//     numero_serie: req.numero_serie,
-//     versao: req.versao
-//   }),
-//   nfe: new Object({
-//     modelo: req.modelo,
-//     serie: req.serie,
-//     numero: req.numero,
-//     data_emissao: req.data_emissao,
-//     data_emissao_formatada: req.data_emissao_formatada,
-//     data_saida_entrada: req.data_saida_entrada,
-//     valor_tol_not_fiscal: req.valor_tol_not_fiscal,
-//     cnpj: req.cnpj,
-//     razao_social: req.razao_social,
-//     escricao_estadual: req.escricao_estadual,
-//     uf: req.uf,
-//     processo: req.processo,
-//     versao_processo: req.versao_processo,
-//     tipo_emissao: req.tipo_emissao,
-//     finalidade: req.finalidade,
-//     natura_operacao: req.natura_operacao,
-//     tipo_operacao: req.tipo_operacao,
-//     forma_pagamento: req.forma_pagamento,
-//     digest: req.digest,
-//     evento: req.evento,
-//     protocolo: req.protocolo,
-//     data_autorizacao: req.data_autorizacao,
-//     data_inclusao: req.data_inclusao
-//   }),
-//   emitente: new Object({
-//     nome_razao: req.nome_razao,
-//     nome_fantasia: req.nome_fantasia,
-//     cnpj: req.cnpj,
-//     endereco: req.endereco,
-//     bairro_distrito: req.bairro_distrito,
-//     cep: req.cep,
-//     municipio: req.municipio,
-//     telefone: req.telefone,
-//     uf: req.uf,
-//     pais: req.pais
-//   }),
-//   produtos: [req.produtos]
-// };

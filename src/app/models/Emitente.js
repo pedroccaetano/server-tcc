@@ -1,5 +1,3 @@
-const mongoose = require("mongoose");
-
 const EmitenteSchema = new Object({
   nome_razao: {
     type: String,

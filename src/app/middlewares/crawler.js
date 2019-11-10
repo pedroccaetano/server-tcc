@@ -11,9 +11,11 @@ const {
 module.exports = async (req, res, next) => {
   let { url, email } = req.body;
 
-  console.log("url -. ", url);
+  console.log("url -> ", url);
 
   let urlDecisao = url.substr(0, 27);
+
+  console.log("ururlDecisaol -> ", urlDecisao);
 
   if (urlDecisao === PERNAMBUCO) {
     await Pernambuco.scraper(url, email)

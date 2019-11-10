@@ -146,7 +146,7 @@ class Tocantins {
     let produtos = [];
     let produto = {};
 
-    $(html).each(function(i, elem) {
+    $(html).each(() => {
       let texto = $(this)
         .text()
         .trim();

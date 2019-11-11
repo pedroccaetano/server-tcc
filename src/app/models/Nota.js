@@ -1,23 +1,28 @@
 const mongoose = require("mongoose");
 
-const nfe = require("./Nfe");
-const emitente = require("./Emitente");
-const produto = require("./Produto");
-const total = require("./Total");
+const Nfce = require("./Nfce");
+const Emitente = require("./Emitente");
+const Produto = require("./Produto");
 
 const NotaSchema = new mongoose.Schema({
   user: {
     email: {
       type: String,
-      required: true
+      required: true,
+      lowercase: true
     }
   },
-  nfe,
-  emitente,
-  total,
+  nfce: {
+    type: Object,
+    ref: Nfce
+  },
+  emitente: {
+    type: Object,
+    ref: Emitente
+  },
   produtos: {
     type: [Object],
-    ref: produto,
+    ref: Produto,
     required: true
   },
   createdAt: {

@@ -1,4 +1,6 @@
-const NfeSchema = new Object({
+const mongoose = require("mongoose");
+
+const NfceSchema = new mongoose.Schema({
   url: {
     type: String,
     required: false
@@ -34,7 +36,15 @@ const NfeSchema = new Object({
   data_saida_entrada: {
     type: String,
     required: false
+  },
+  valor_produto: {
+    type: String,
+    required: false
+  },
+  valor_nota: {
+    type: String,
+    required: false
   }
 });
 
-module.exports = NfeSchema;
+module.exports = mongoose.model("Nfce", NfceSchema);

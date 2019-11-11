@@ -1,4 +1,6 @@
-const EmitenteSchema = new Object({
+const mongoose = require("mongoose");
+
+const EmitenteSchema = new mongoose.Schema({
   nome_razao: {
     type: String,
     required: false
@@ -41,4 +43,4 @@ const EmitenteSchema = new Object({
   }
 });
 
-module.exports = EmitenteSchema;
+module.exports = mongoose.model("Emitente", EmitenteSchema);

@@ -99,7 +99,7 @@ class RioGrandeDoSul {
               user: {
                 email
               },
-              nfe: {
+              nfce: {
                 url: isSafe(() => url, null),
                 versao: isSafe(() => versao, null),
                 serie: isSafe(() => serie, null),
@@ -114,7 +114,9 @@ class RioGrandeDoSul {
                 data_emissao_formatada: moment(
                   isSafe(() => data_emissao[0], null),
                   "DD-MM-YYYY"
-                ).format("LL")
+                ).format("LL"),
+                valor_produto: isSafe(() => valor_nota.replace(/,/, "."), null),
+                valor_nota: isSafe(() => valor_nota.replace(/,/, "."), null)
               },
               emitente: {
                 nome_razao: isSafe(() => nome_fantasia, null),
@@ -128,18 +130,13 @@ class RioGrandeDoSul {
                 telefone: isSafe(() => telefone, null),
                 uf: isSafe(() => "RS", null)
               },
-              produtos: isSafe(() => produtos, null),
-              total: {
-                valor_produto: isSafe(() => valor_nota.replace(/,/, "."), null),
-                valor_nota: isSafe(() => valor_nota.replace(/,/, "."), null)
-              }
+              produtos: isSafe(() => produtos, null)
             };
 
             return resolve(nota);
           });
         })
         .catch(error => {
-          console.log("Erro ao realizar requisição");
           return reject(error);
         });
     });

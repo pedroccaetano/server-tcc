@@ -101,14 +101,11 @@ class NotaController {
 
     const date_split = dateString.split("-");
 
-    let minDate = new Date(parseInt(date_split[0]), parseInt(date_split[1]), 1);
-    let maxDate = new Date(parseInt(date_split[0]), minDate.getMonth() + 1, 0);
-
     await Nota.find({
       "user.email": email,
       "nfe.data_emissao": {
-        $gte: minDate,
-        $lte: maxDate
+        $gte: new Date(parseInt(date_split[0]), parseInt(date_split[1]), 1),
+        $lte: new Date(parseInt(date_split[0]), parseInt(date_split[1]) + 1, 0)
       }
     })
       .then(response => {
@@ -117,7 +114,7 @@ class NotaController {
           nota: response
         });
       })
-      .catch(error => {
+      .catch(() => {
         return res.json({
           houve_erro: true,
           mensagem: "Não foi possível fazer a busca."

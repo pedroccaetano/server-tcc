@@ -4,9 +4,6 @@ class SessionController {
   async store(req, res) {
     const { email, password } = req.body;
 
-    console.log("email, password");
-    console.log(email, password);
-
     const user = await User.findOne({ email });
 
     if (!user) {

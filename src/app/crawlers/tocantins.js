@@ -103,7 +103,7 @@ class Tocantins {
             user: {
               email
             },
-            nfe: {
+            nfce: {
               url: isSafe(() => url, null),
               versao: isSafe(() => versao, null),
               chave: isSafe(() => chave, null),
@@ -111,7 +111,12 @@ class Tocantins {
               serie: isSafe(() => serie, null),
               numero: isSafe(() => numero, null),
               data_emissao: isSafe(() => data_emissao, null),
-              data_emissao_formatada: isSafe(() => data_emissao_formatada, null)
+              data_emissao_formatada: isSafe(
+                () => data_emissao_formatada,
+                null
+              ),
+              valor_produto: isSafe(() => valor_nota, null),
+              valor_nota: isSafe(() => valor_nota, null)
             },
             emitente: {
               nome_razao: isSafe(() => nome_razao, null),
@@ -125,11 +130,7 @@ class Tocantins {
               telefone: isSafe(() => telefone, null),
               uf: isSafe(() => "TO", null)
             },
-            produtos,
-            total: {
-              valor_produto: isSafe(() => valor_nota, null),
-              valor_nota: isSafe(() => valor_nota, null)
-            }
+            produtos
           };
 
           resolve(nota);
@@ -146,7 +147,7 @@ class Tocantins {
     let produtos = [];
     let produto = {};
 
-    $(html).each(() => {
+    $(html).each(function(i, elem) {
       let texto = $(this)
         .text()
         .trim();

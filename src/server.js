@@ -11,11 +11,14 @@ class App {
   constructor() {
     this.express = express();
     this.express.use(cors());
-    this.isDev = process.env.NODE_ENV !== "production";
 
-    this.database();
     this.middlewares();
+    this.database();
     this.routes();
+  }
+
+  routes() {
+    this.express.use(routes);
   }
 
   async database() {
@@ -33,10 +36,6 @@ class App {
   middlewares() {
     this.express.use(express.urlencoded({ extended: true }));
     this.express.use(express.json());
-  }
-
-  routes() {
-    this.express.use(routes);
   }
 }
 

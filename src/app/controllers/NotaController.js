@@ -121,23 +121,5 @@ class NotaController {
         });
       });
   }
-
-  async update(req, res) {
-    const nota = await Nota.findByIdAndUpdate();
-
-    return res.json(nota);
-  }
-
-  async destroy(req, res) {
-    await Nota.findByIdAndDelete(req.params.id);
-
-    return res.send();
-  }
-
-  async show(req, res) {
-    const notas = await Nota.find();
-
-    return res.json(notas);
-  }
 }
 module.exports = new NotaController();

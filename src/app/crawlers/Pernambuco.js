@@ -41,17 +41,11 @@ class Pernambuco {
               unidade: isSafe(() => produto.uCom.text, null),
               quantidade: isSafe(() => produto.qCom.text, null),
               preco_unitario: isSafe(
-                () =>
-                  parseFloat(produto.vUnCom.text)
-                    .toFixed(2)
-                    .replace(".", ","),
+                () => parseFloat(produto.vUnCom.text).toFixed(2),
                 null
               ),
               preco_total: isSafe(
-                () =>
-                  parseFloat(produto.vProd.text)
-                    .toFixed(2)
-                    .replace(".", ","),
+                () => parseFloat(produto.vProd.text).toFixed(2),
                 null
               ),
               desconto: isSafe(() => produto.vDesc.text, null)
@@ -75,8 +69,13 @@ class Pernambuco {
               data_emissao: isSafe(() => dadosNota.ide.dhEmi.text, null),
               data_emissao_formatada: moment(
                 isSafe(() => dadosNota.ide.dhEmi.text, null),
-                "YYYY-MM-DDTHH:mm:ssZ"
-              ).format("LL")
+                "YYYY-MM-DD"
+              ).format("LL"),
+              valor_produto: isSafe(
+                () => dadosNota.total.ICMSTot.vProd.text,
+                null
+              ),
+              valor_nota: isSafe(() => dadosNota.total.ICMSTot.vNF.text, null)
             },
             emitente: {
               nome_razao: isSafe(() => dadosNota.emit.xNome.text, null),
@@ -96,23 +95,12 @@ class Pernambuco {
               telefone: isSafe(() => dadosNota.emit.enderEmit.fone.text, null),
               uf: isSafe(() => "PE", null)
             },
-            produtos,
-            total: {
-              valor_produto: isSafe(
-                () => dadosNota.total.ICMSTot.vProd.text.replace(/,/, "."),
-                null
-              ),
-              valor_nota: isSafe(
-                () => dadosNota.total.ICMSTot.vNF.text.replace(/,/, "."),
-                null
-              )
-            }
+            produtos
           };
 
           resolve(nota);
         })
         .catch(error => {
-          console.log(error);
           reject(error);
         });
     });

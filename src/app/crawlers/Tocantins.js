@@ -86,11 +86,8 @@ class Tocantins {
                       this.buscarProdutos(produtosHtml)
                     );
                   })
-                  .catch(() => {
-                    console.log(
-                      "Erro ao realizar paginação numero ",
-                      temPaginacao[0]
-                    );
+                  .catch(error => {
+                    reject(error);
                   });
               }
               temPaginacao.splice(0, 1);
@@ -100,6 +97,13 @@ class Tocantins {
 
             produtos = this.buscarProdutos(produtosHtml);
           }
+
+          data_emissao = data_emissao.split("/");
+          data_emissao = new Date(
+            data_emissao[2],
+            data_emissao[1] - 1,
+            data_emissao[0]
+          ).toISOString();
 
           let nota = {
             user: {
@@ -117,8 +121,14 @@ class Tocantins {
                 () => data_emissao_formatada,
                 null
               ),
-              valor_produto: isSafe(() => valor_nota, null),
-              valor_nota: isSafe(() => valor_nota, null)
+              valor_produto: isSafe(
+                () => valor_nota.replace(/,/, ".").substr(3),
+                null
+              ),
+              valor_nota: isSafe(
+                () => valor_nota.replace(/,/, ".").substr(3),
+                null
+              )
             },
             emitente: {
               nome_razao: isSafe(() => nome_razao, null),
@@ -171,11 +181,13 @@ class Tocantins {
       }
 
       if (texto.match(regexPrecoUnitario)) {
-        produto.preco_unitario = texto.match(regexPrecoUnitario)[0];
+        produto.preco_unitario = texto
+          .match(regexPrecoUnitario)[0]
+          .replace(/,/, ".");
       }
 
       if (texto.match(regexPrecoTotal)) {
-        produto.preco_total = texto.match(regexPrecoTotal)[0];
+        produto.preco_total = texto.match(regexPrecoTotal)[0].replace(/,/, ".");
 
         produtos.push(produto);
 

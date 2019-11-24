@@ -18,7 +18,7 @@ class SessionController {
         .json({ resposta: "Usuário ou senha incorreto!", houve_erro: true });
     }
 
-    return res.json({ user, token: User.generateToken(user) });
+    return res.json({ user, token: User.generateToken(email) });
   }
 }
 

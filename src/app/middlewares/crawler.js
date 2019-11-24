@@ -9,14 +9,15 @@ const {
 } = require("../../config/sefaz");
 
 module.exports = async (req, res, next) => {
-  let { url, email } = req.body;
+  const { email } = req;
+  let { url } = req.body;
 
   let urlDecisao = url.substr(0, 27);
 
   if (urlDecisao === PERNAMBUCO) {
     await Pernambuco.scraper(url, email)
       .then(nota => (req.nota = nota))
-      .catch(error =>
+      .catch(() =>
         res.status(500).send({
           houve_erro: true,
           mensagem: "Error ao realizar crawler de Pernambuco"

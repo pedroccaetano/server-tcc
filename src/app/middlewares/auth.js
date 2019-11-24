@@ -1,23 +1,23 @@
-const jwt = require('jsonwebtoken')
-const authConfig = require('../../config/auth')
-const { promisify } = require('util')
+const jwt = require("jsonwebtoken");
+const authConfig = require("../../config/auth");
+const { promisify } = require("util");
 
 module.exports = async (req, res, next) => {
-  const authHeader = req.headers.authorization
+  const authHeader = req.headers.authorization;
 
   if (!authHeader) {
-    return res.status(401).json({ error: 'Token não enviado'})
+    return res.status(401).json({ error: "Token não enviado" });
   }
 
-  const [, token] = authHeader.split(' ')
+  const [, token] = authHeader.split(" ");
 
   try {
-    const decoded = await promisify(jwt.verify)(token, authConfig.secret)
-    
-    req.userId = decoded.id
+    const decoded = await promisify(jwt.verify)(token, authConfig.secret);
 
-    return next()
+    req.email = decoded.email;
+
+    return next();
   } catch (err) {
-    return res.status(401).json({ error: 'Token inválido'})
+    return res.status(401).json({ error: "Token inválido" });
   }
-}
+};

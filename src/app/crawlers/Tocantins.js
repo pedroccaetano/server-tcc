@@ -15,7 +15,7 @@ const {
   regexEndereco,
   regexMunicipio,
   regexDataEmisao,
-  regexRemoveCaracteres
+  regexRemoveMascara
 } = require("../utils/regex");
 
 const { isSafe, baseRequestOptions } = require("../utils");
@@ -28,13 +28,15 @@ class Tocantins {
           let $ = cheerio.load(html);
 
           let nome_razao = $("label#j_id_19\\:j_id_1u").text();
+
           let cnpj = $("label#j_id_19\\:j_id_1v")
             .text()
             .match(regexCNPJ)[0]
-            .replace(regexRemoveCaracteres, "");
+            .replace(regexRemoveMascara, "");
+
           let escricao_estadual = $("label#j_id_19\\:j_id_1w")
             .text()
-            .replace(regexRemoveCaracteres, "");
+            .replace(regexRemoveMascara, "");
           let dadosEmitente = $("label#j_id_19\\:j_id_1x").text();
           let cep = dadosEmitente.match(regexCep)[0];
           let telefone = dadosEmitente.match(regexTelefone)[0];
@@ -62,7 +64,7 @@ class Tocantins {
             "div.ui-paginator-bottom span.ui-paginator-pages"
           )
             .text()
-            .replace(regexRemoveCaracteres, "")
+            .replace(regexRemoveMascara, "")
             .split("")
             .map(elem => parseInt(elem));
 

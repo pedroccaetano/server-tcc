@@ -31,7 +31,7 @@ class NotaController {
       state
     } = req.params;
 
-    const { email } = req.query;
+    const { email } = req;
 
     const arrayDateInit = initDate.split("-");
     const arrayDateFinal = finalDate.split("-");
@@ -97,7 +97,7 @@ class NotaController {
 
   async findByDate(req, res) {
     const { dateString } = req.params;
-    const { email } = req.query;
+    const { email } = req;
 
     const date_split = dateString.split("-");
 

@@ -62,7 +62,7 @@ class Pernambuco {
             user: {
               email
             },
-            nfce: {
+            nfe: {
               url: isSafe(() => url, null),
               versao: isSafe(
                 () => json.nfeProc.proc.nfeProc._attributes.versao,
@@ -76,15 +76,7 @@ class Pernambuco {
               data_emissao_formatada: moment(
                 isSafe(() => dadosNota.ide.dhEmi.text, null),
                 "YYYY-MM-DDTHH:mm:ssZ"
-              ).format("LL"),
-              valor_produto: isSafe(
-                () => dadosNota.total.ICMSTot.vProd.text.replace(/,/, "."),
-                null
-              ),
-              valor_nota: isSafe(
-                () => dadosNota.total.ICMSTot.vNF.text.replace(/,/, "."),
-                null
-              )
+              ).format("LL")
             },
             emitente: {
               nome_razao: isSafe(() => dadosNota.emit.xNome.text, null),
@@ -104,7 +96,17 @@ class Pernambuco {
               telefone: isSafe(() => dadosNota.emit.enderEmit.fone.text, null),
               uf: isSafe(() => "PE", null)
             },
-            produtos
+            produtos,
+            total: {
+              valor_produto: isSafe(
+                () => dadosNota.total.ICMSTot.vProd.text.replace(/,/, "."),
+                null
+              ),
+              valor_nota: isSafe(
+                () => dadosNota.total.ICMSTot.vNF.text.replace(/,/, "."),
+                null
+              )
+            }
           };
 
           resolve(nota);

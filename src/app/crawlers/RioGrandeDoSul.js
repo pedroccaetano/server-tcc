@@ -6,7 +6,7 @@ moment.locale("pt-BR");
 const {
   regexCNPJ,
   regexDataEmisao,
-  regexRemoveCaracteres,
+  regexRemoveMascara,
   regexInsEstadual,
   regexNumeroEmitente
 } = require("../utils/regex");
@@ -91,7 +91,7 @@ class RioGrandeDoSul {
 
             let cnpj = dadosEmitente
               .match(regexCNPJ)[0]
-              .replace(regexRemoveCaracteres, "");
+              .replace(regexRemoveMascara, "");
 
             let escricao_estadual = dadosEmitente.match(regexInsEstadual)[0];
 

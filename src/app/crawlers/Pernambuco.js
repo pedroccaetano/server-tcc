@@ -62,7 +62,7 @@ class Pernambuco {
             user: {
               email
             },
-            nfe: {
+            nfce: {
               url: isSafe(() => url, null),
               versao: isSafe(
                 () => json.nfeProc.proc.nfeProc._attributes.versao,

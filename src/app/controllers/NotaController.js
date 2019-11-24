@@ -22,14 +22,8 @@ class NotaController {
   }
 
   async find(req, res) {
-    let {
-      productName,
-      barcode,
-      organization,
-      initDate,
-      finalDate,
-      state
-    } = req.params;
+    console.log("aquiiiiii");
+    let { productName, organization, initDate, finalDate, state } = req.params;
 
     const { email } = req;
 
@@ -44,13 +38,27 @@ class NotaController {
       organization = "";
     }
 
-    if (barcode == '""') {
-      barcode = "";
-    }
-
     if (state == '""') {
       state = "";
     }
+
+    console.log(new Date(arrayDateInit[0], arrayDateInit[1], arrayDateInit[2]));
+
+    // console.log(
+    //   "user.email",
+    //   email,
+    //   "emitente.uf",
+    //   new RegExp(state, "i"),
+    //   "emitente.nome_razao",
+    //   new RegExp(organization, "i"),
+    //   "produtos.nome",
+    //   new RegExp(productName, "i"),
+    //   "nfe.data_emissao",
+    //   {
+    //     $gte: new Date(arrayDateInit[0], arrayDateInit[1], arrayDateInit[2]),
+    //     $lte: new Date(arrayDateFinal[0], arrayDateFinal[1], arrayDateFinal[2])
+    //   }
+    // );
 
     await Nota.find({
       "user.email": email,
@@ -64,6 +72,7 @@ class NotaController {
     })
       .select("produtos emitente")
       .then(response => {
+        console.log("Produtos ->", response);
         let notas = [];
 
         response.map(resposta => {

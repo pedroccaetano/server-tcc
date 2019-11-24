@@ -35,10 +35,6 @@ class NotaController {
       organization = "";
     }
 
-    if (state == '""') {
-      state = "";
-    }
-
     await Nota.find({
       "emitente.uf": new RegExp(state, "i"),
       "emitente.nome_razao": new RegExp(organization, "i"),
@@ -82,7 +78,7 @@ class NotaController {
           nota: notas
         });
       })
-      .catch(error => {
+      .catch(() => {
         return res.json({
           houve_erro: true,
           mensagem: "Não foi possível fazer a busca."

@@ -1,6 +1,7 @@
 const request = require("request-promise");
 const cheerio = require("cheerio");
 const moment = require("moment");
+const nanoid = require("nanoid");
 moment.locale("pt-BR");
 
 const {
@@ -165,7 +166,11 @@ class Tocantins {
         .trim();
 
       if (texto.match(regexProduto)) {
-        produto.codigo = texto.match(regexProduto)[0];
+        produto.codigo = nanoid();
+      }
+
+      if (texto.match(regexProduto)) {
+        produto.codigo_produto = texto.match(regexProduto)[0];
       }
 
       if (texto.match(regexNome)) {

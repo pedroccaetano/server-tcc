@@ -24,15 +24,16 @@
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.24.0",
     "mongoose": "^5.4.19",
+    "nanoid": "^2.1.7",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "xml-js": "^1.6.11"
   },
   "devDependencies": {
+    "eslint": "^5.16.0",
     "eslint-config-airbnb": "^18.0.1",
     "nodemon": "^1.19.3",
-    "sucrase": "^3.10.1",
-    "eslint": "^5.16.0"
+    "sucrase": "^3.10.1"
   },
   "engines": {
     "node": "12.10.0"

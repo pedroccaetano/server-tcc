@@ -1,6 +1,7 @@
 const request = require("request-promise");
 const cheerio = require("cheerio");
 const moment = require("moment");
+const nanoid = require("nanoid");
 moment.locale("pt-BR");
 
 const {
@@ -56,7 +57,8 @@ class RioGrandeDoSul {
 
             arrayProdutos.forEach(produto => {
               produtos.push({
-                codigo: isSafe(() => produto[0], null),
+                codigo: isSafe(() => nanoid(), null),
+                codigo_produto: isSafe(() => produto[0], null),
                 nome: isSafe(() => produto[1], null),
                 quantidade: isSafe(() => produto[2], null),
                 unidade: isSafe(() => produto[3], null),

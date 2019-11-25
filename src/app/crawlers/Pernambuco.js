@@ -1,4 +1,5 @@
 const request = require("request-promise");
+const nanoid = require("nanoid");
 const convertXml = require("xml-js");
 const moment = require("moment");
 moment.locale("pt-BR");
@@ -33,7 +34,8 @@ class Pernambuco {
             produto = produto.prod;
 
             produtos.push({
-              codigo: isSafe(() => produto.cProd.text, null),
+              codigo: isSafe(() => nanoid(), null),
+              codigo_produto: isSafe(() => produto.cProd.text, null),
               codigo_barras: isSafe(() => produto.cEAN.text, null),
               nome: isSafe(() => produto.xProd.text, null),
               ncm: isSafe(() => produto.NCM.text, null),

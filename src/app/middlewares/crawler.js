@@ -10,11 +10,11 @@ const {
 
 module.exports = async (req, res, next) => {
   const { email } = req;
-
   let { url } = req.body;
+
   let urlDecisao = url.substr(0, 27);
 
-  const crawlers = new Map()
+  await new Map()
     .set(PERNAMBUCO, async () => {
       await Pernambuco.scraper(url, email)
         .then(nota => (req.nota = nota))
@@ -51,9 +51,9 @@ module.exports = async (req, res, next) => {
             errorMessage
           });
         });
-    });
-
-  await crawlers.get(urlDecisao).call();
+    })
+    .get(urlDecisao)
+    .call();
 
   next();
 };

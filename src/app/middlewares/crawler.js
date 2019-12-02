@@ -10,45 +10,50 @@ const {
 
 module.exports = async (req, res, next) => {
   const { email } = req;
-  let { url } = req.body;
 
+  let { url } = req.body;
   let urlDecisao = url.substr(0, 27);
 
-  if (urlDecisao === PERNAMBUCO) {
-    await Pernambuco.scraper(url, email)
-      .then(nota => (req.nota = nota))
-      .catch(() =>
-        res.status(500).send({
-          houve_erro: true,
-          mensagem: "Error ao realizar crawler de Pernambuco"
-        })
-      );
-  } else if (urlDecisao === RIO_GRANDE_DO_SUL) {
-    await RioGrandeDoSul.scraper(url, email)
-      .then(nota => (req.nota = nota))
-      .catch(error => {
-        const { statusCode, error: errorMessage } = error;
+  const crawlers = new Map()
+    .set(PERNAMBUCO, async () => {
+      await Pernambuco.scraper(url, email)
+        .then(nota => (req.nota = nota))
+        .catch(() =>
+          res.status(500).send({
+            houve_erro: true,
+            mensagem: "Error ao realizar crawler de Pernambuco"
+          })
+        );
+    })
+    .set(RIO_GRANDE_DO_SUL, async () => {
+      await RioGrandeDoSul.scraper(url, email)
+        .then(nota => (req.nota = nota))
+        .catch(error => {
+          const { statusCode, error: errorMessage } = error;
 
-        res.status(500).send({
-          houve_erro: true,
-          mensagem: "Erro ao realizar crawler de Rio Grande do Sul",
-          statusCode,
-          errorMessage
+          res.status(500).send({
+            houve_erro: true,
+            mensagem: "Erro ao realizar crawler de Rio Grande do Sul",
+            statusCode,
+            errorMessage
+          });
         });
-      });
-  } else if (urlDecisao === TOCANTINS) {
-    await Tocantins.scraper(url, email)
-      .then(nota => (req.nota = nota))
-      .catch(error => {
-        const { statusCode, error: errorMessage } = error;
-        res.status(500).send({
-          houve_erro: true,
-          mensagem: "Error ao realizar crawler de Toncantins",
-          statusCode,
-          errorMessage
+    })
+    .set(TOCANTINS, async () => {
+      await Tocantins.scraper(url, email)
+        .then(nota => (req.nota = nota))
+        .catch(error => {
+          const { statusCode, error: errorMessage } = error;
+          res.status(500).send({
+            houve_erro: true,
+            mensagem: "Error ao realizar crawler de Toncantins",
+            statusCode,
+            errorMessage
+          });
         });
-      });
-  }
+    });
+
+  await crawlers.get(urlDecisao).call();
 
   next();
 };

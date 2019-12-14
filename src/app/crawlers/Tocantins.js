@@ -27,23 +27,26 @@ class Tocantins {
       await request(baseRequestOptions(url))
         .then(async html => {
           let $ = cheerio.load(html);
-
           let nome_razao = $("label#j_id_19\\:j_id_1u").text();
-
           let cnpj = $("label#j_id_19\\:j_id_1v")
             .text()
             .match(regexCNPJ)[0]
             .replace(regexRemoveMascara, "");
-
           let escricao_estadual = $("label#j_id_19\\:j_id_1w")
             .text()
             .replace(regexRemoveMascara, "");
           let dadosEmitente = $("label#j_id_19\\:j_id_1x").text();
           let cep = dadosEmitente.match(regexCep)[0];
-          let telefone = dadosEmitente.match(regexTelefone)[0];
+
+          let telefone = "";
+          try {
+            telefone = dadosEmitente.match(regexTelefone);
+          } catch (e) {
+            console.log("Emitente sem telefone.");
+          }
+
           let endereco = dadosEmitente.match(regexEndereco)[0];
           let municipio = dadosEmitente.match(regexMunicipio)[0];
-
           let versao = $("label#j_id_19\\:j_id_2o\\:j_id_34").text();
           let chave = $(
             "tr:contains('Chave de acesso:') td:nth-of-type(2)"

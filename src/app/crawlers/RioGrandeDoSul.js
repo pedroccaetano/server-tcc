@@ -62,8 +62,11 @@ class RioGrandeDoSul {
                 nome: isSafe(() => produto[1], null),
                 quantidade: isSafe(() => produto[2], null),
                 unidade: isSafe(() => produto[3], null),
-                preco_unitario: isSafe(() => produto[4], null),
-                preco_total: isSafe(() => produto[5], null)
+                preco_unitario: isSafe(
+                  () => produto[4].replace(/,/, "."),
+                  null
+                ),
+                preco_total: isSafe(() => produto[5].replace(/,/, "."), null)
               });
             });
 

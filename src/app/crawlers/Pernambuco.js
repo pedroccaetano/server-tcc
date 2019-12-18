@@ -30,29 +30,42 @@ class Pernambuco {
           let produtos = [];
           let produtos_json = isSafe(() => dadosNota.det, null);
 
-          produtos_json.forEach(produto => {
-            produto = produto.prod;
+          if (Array.isArray(produtos_json)) {
+            produtos_json.forEach(produto => {
+              produto = produto.prod;
 
+              produtos.push({
+                codigo: isSafe(() => nanoid(), null),
+                codigo_produto: isSafe(() => produto.cProd.text, null),
+                codigo_barras: isSafe(() => produto.cEAN.text, null),
+                nome: isSafe(() => produto.xProd.text, null),
+                ncm: isSafe(() => produto.NCM.text, null),
+                cfop: isSafe(() => produto.CFOP.text, null),
+                unidade: isSafe(() => produto.uCom.text, null),
+                quantidade: isSafe(() => produto.qCom.text, null),
+                preco_unitario: isSafe(() => produto.vUnCom.text, null),
+                preco_total: isSafe(() => produto.vProd.text, null),
+                desconto: isSafe(() => produto.vDesc.text, null)
+              });
+            });
+          } else {
             produtos.push({
               codigo: isSafe(() => nanoid(), null),
-              codigo_produto: isSafe(() => produto.cProd.text, null),
-              codigo_barras: isSafe(() => produto.cEAN.text, null),
-              nome: isSafe(() => produto.xProd.text, null),
-              ncm: isSafe(() => produto.NCM.text, null),
-              cfop: isSafe(() => produto.CFOP.text, null),
-              unidade: isSafe(() => produto.uCom.text, null),
-              quantidade: isSafe(() => produto.qCom.text, null),
+              codigo_produto: isSafe(() => produtos_json.prod.cProd.text, null),
+              codigo_barras: isSafe(() => produtos_json.prod.cEAN.text, null),
+              nome: isSafe(() => produtos_json.prod.xProd.text, null),
+              ncm: isSafe(() => produtos_json.prod.NCM.text, null),
+              cfop: isSafe(() => produtos_json.prod.CFOP.text, null),
+              unidade: isSafe(() => produtos_json.prod.uCom.text, null),
+              quantidade: isSafe(() => produtos_json.prod.qCom.text, null),
               preco_unitario: isSafe(
-                () => parseFloat(produto.vUnCom.text).toFixed(2),
+                () => produtos_json.prod.vUnCom.text,
                 null
               ),
-              preco_total: isSafe(
-                () => parseFloat(produto.vProd.text).toFixed(2),
-                null
-              ),
-              desconto: isSafe(() => produto.vDesc.text, null)
+              preco_total: isSafe(() => produtos_json.prod.vProd.text, null),
+              desconto: isSafe(() => produtos_json.prod.vDesc.text, null)
             });
-          });
+          }
 
           let nota = {
             user: {

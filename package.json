@@ -24,7 +24,7 @@
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.24.0",
     "mongoose": "^5.4.19",
-    "nanoid": "^2.1.7",
+    "nanoid": "^3.1.31",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "xml-js": "^1.6.11"
